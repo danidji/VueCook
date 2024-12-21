@@ -5,9 +5,10 @@ import {useForm} from 'vee-validate'
 
 import {Button} from '@/components/ui/button'
 import {category} from '@/utils/data.constants'
-import FormInput from './InputForm.vue'
+import InputForm from './InputForm.vue'
 import SelectForm from './SelectForm.vue'
 import TextAreaForm from './TextAreaForm.vue'
+import TimeInput from './TimeInput.vue'
 
 const formSchema = toTypedSchema(
   z.object({
@@ -17,6 +18,9 @@ const formSchema = toTypedSchema(
       .string({required_error: 'Champs requis'})
       .refine(value => category.map(c => c.type).includes(value)),
     steps: z.string({required_error: 'Champs requis'}).min(2).max(2000),
+    preparationTime: z.string().optional(),
+    cookingTime: z.string().optional(),
+    persNb: z.number().optional(),
   }),
 )
 
@@ -30,11 +34,16 @@ const onSubmit = form.handleSubmit(values => {
 </script>
 
 <template>
-  <form @submit="onSubmit" class="space-y-6">
-    <FormInput type="text" name="title" placeholder="Titre" />
-    <FormInput type="text" name="description" placeholder="Description" />
+  <form @submit="onSubmit" class="space-y-4">
+    <InputForm type="text" name="title" placeholder="Titre" />
+    <InputForm type="text" name="description" placeholder="Description" />
     <SelectForm name="category" placeholder="Catégorie" :list="category" withItemIcon />
     <TextAreaForm name="steps" placeholder="Étapes" />
+    <div class="flex items-end justify-between gap-2">
+      <TimeInput iconName="clock" name="preparationTime" label="Préparation" />
+      <TimeInput iconName="oven" name="preparationTime" label="Cuisson" />
+      <InputForm type="number" name="persNb" placeholder="Nb de personne" />
+    </div>
     <Button type="submit">Enregistrer</Button>
   </form>
 </template>

@@ -19,7 +19,7 @@ defineProps<{
     <DialogTrigger>
       <Button>{{ trigger }}</Button>
     </DialogTrigger>
-    <DialogContent class="sm:max-w-[425px]">
+    <DialogContent class="sm:max-w-[600px]">
       <DialogHeader>
         <DialogTitle>{{ title }}</DialogTitle>
       </DialogHeader>
