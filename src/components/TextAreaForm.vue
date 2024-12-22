@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {FormControl, FormField, FormItem, FormMessage} from '@/components/ui/form'
+import {FormControl, FormField, FormItem} from '@/components/ui/form'
 import {Textarea} from '@/components/ui/textarea'
 
 const {name, type, placeholder} = defineProps<{
@@ -10,12 +10,15 @@ const {name, type, placeholder} = defineProps<{
 </script>
 
 <template>
-  <FormField v-slot="{componentField}" :name="name">
+  <FormField v-slot="{componentField, errorMessage}" :name="name">
     <FormItem>
       <FormControl>
-        <Textarea :type="type" :placeholder="placeholder" v-bind="componentField" />
+        <Textarea
+          :type="type"
+          :placeholder="placeholder"
+          v-bind="componentField"
+          :class="errorMessage && 'ring-destructive ring-2 ring-offset-2 '" />
       </FormControl>
-      <FormMessage />
     </FormItem>
   </FormField>
 </template>

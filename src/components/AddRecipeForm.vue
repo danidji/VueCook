@@ -19,7 +19,10 @@ const formSchema = toTypedSchema(
       .string({required_error: 'Champs requis'})
       .refine(value => category.map(c => c.type).includes(value)),
     steps: z.string({required_error: 'Champs requis'}).min(2).max(2000),
-    ingredients: z.array(z.string()).min(1).max(50),
+    ingredients: z
+      .array(z.string({required_error: 'Champs requis'}))
+      .min(1)
+      .max(50),
     preparationTime: z.string().optional(),
     cookingTime: z.string().optional(),
     persNb: z.number().optional(),
@@ -28,16 +31,6 @@ const formSchema = toTypedSchema(
 
 const form = useForm({
   validationSchema: formSchema,
-  initialValues: {
-    title: '',
-    description: '',
-    category: '',
-    steps: '',
-    ingredients: [],
-    preparationTime: '',
-    cookingTime: '',
-    persNb: 0,
-  },
 })
 
 const onSubmit = form.handleSubmit(values => {

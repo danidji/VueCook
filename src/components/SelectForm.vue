@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import {FormControl, FormField, FormItem, FormMessage} from '@/components/ui/form'
+import {FormControl, FormField, FormItem} from '@/components/ui/form'
 import type {TCategory} from '@/models'
 import IconImage from './IconImage.vue'
 
@@ -25,11 +25,11 @@ const {
 </script>
 
 <template>
-  <FormField v-slot="{componentField}" :name="name">
+  <FormField v-slot="{componentField, errorMessage}" :name="name">
     <FormItem>
       <Select v-bind="componentField">
         <FormControl>
-          <SelectTrigger>
+          <SelectTrigger :class="errorMessage && 'ring-destructive ring-2 ring-offset-2 '">
             <SelectValue :placeholder="placeholder" />
           </SelectTrigger>
         </FormControl>
@@ -46,7 +46,6 @@ const {
           </SelectGroup>
         </SelectContent>
       </Select>
-      <FormMessage />
     </FormItem>
   </FormField>
 </template>

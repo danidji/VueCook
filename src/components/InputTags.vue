@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form'
+import {FormControl, FormField, FormItem, FormLabel} from '@/components/ui/form'
 import {
   TagsInput,
   TagsInputInput,
@@ -15,11 +15,13 @@ const {name, placeholder, label} = defineProps<{
 </script>
 
 <template>
-  <FormField :name="name" v-slot="{value}">
+  <FormField :name="name" v-slot="{value, errorMessage}">
     <FormItem>
       <FormLabel>{{ label }}</FormLabel>
       <FormControl>
-        <TagsInput :model-value="value">
+        <TagsInput
+          :model-value="value"
+          :class="errorMessage && 'ring-destructive ring-2 ring-offset-2 '">
           <TagsInputItem v-for="item in value" :key="item" :value="item">
             <TagsInputItemText />
             <TagsInputItemDelete />
@@ -27,7 +29,6 @@ const {name, placeholder, label} = defineProps<{
           <TagsInputInput :placeholder="placeholder" />
         </TagsInput>
       </FormControl>
-      <FormMessage />
     </FormItem>
   </FormField>
 </template>
