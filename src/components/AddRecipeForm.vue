@@ -10,6 +10,7 @@ import SelectForm from './SelectForm.vue'
 import TextAreaForm from './TextAreaForm.vue'
 import TimeInput from './TimeInput.vue'
 import InputTags from './InputTags.vue'
+import ImageUploader from './ImageUploader.vue'
 
 const formSchema = toTypedSchema(
   z.object({
@@ -40,13 +41,14 @@ const onSubmit = form.handleSubmit(values => {
 
 <template>
   <form @submit="onSubmit" class="space-y-4">
+    <ImageUploader />
     <InputForm type="text" name="title" placeholder="Titre" />
     <InputForm type="text" name="description" placeholder="Description" />
     <SelectForm name="category" placeholder="Catégorie" :list="category" withItemIcon />
     <InputTags name="ingredients" placeholder="Ingrédients" />
     <TextAreaForm name="steps" placeholder="Étapes" />
 
-    <div class="flex items-end justify-between gap-2">
+    <div class="flex items-end gap-2">
       <TimeInput iconName="clock" name="preparationTime" label="Préparation" />
       <TimeInput iconName="oven" name="preparationTime" label="Cuisson" />
       <InputForm type="number" name="persNb" placeholder="Nb de personne" />

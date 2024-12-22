@@ -6,8 +6,19 @@ import asian from './icones/asian.svg'
 import light from './icones/light.svg'
 import clock from './icones/clock.svg'
 import oven from './icones/oven.svg'
+import upload from './icones/upload.svg'
 
-const IconSvg: Record<string, string> = {favorite, fast, easy, dessert, asian, light, clock, oven}
+const IconSvg: Record<string, string> = {
+  favorite,
+  fast,
+  easy,
+  dessert,
+  asian,
+  light,
+  clock,
+  oven,
+  upload,
+}
 
 export default IconSvg
 
