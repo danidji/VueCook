@@ -10,7 +10,7 @@ import SelectForm from './SelectForm.vue'
 import TextAreaForm from './TextAreaForm.vue'
 import TimeInput from './TimeInput.vue'
 import InputTags from './InputTags.vue'
-import ImageUploader from './ImageUploader.vue'
+// import ImageUploader from './ImageUploader.vue'
 
 const formSchema = toTypedSchema(
   z.object({
@@ -41,7 +41,7 @@ const onSubmit = form.handleSubmit(values => {
 
 <template>
   <form @submit="onSubmit" class="space-y-4">
-    <ImageUploader />
+    <!-- <ImageUploader /> -->
     <InputForm type="text" name="title" placeholder="Titre" />
     <InputForm type="text" name="description" placeholder="Description" />
     <SelectForm name="category" placeholder="Catégorie" :list="category" withItemIcon />
