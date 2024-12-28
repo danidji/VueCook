@@ -6,11 +6,11 @@ export type TCategory = {
 export type TRecipe = {
   id: string
   title: string
-  description: string
-  category: TCategory
+  description?: string
+  category: string
   ingredients: string[]
   steps: string
   preparationTime?: string
   cookingTime?: string
-  persNb?: string
+  persNb?: number
 }

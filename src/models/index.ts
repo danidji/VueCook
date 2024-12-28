@@ -1,1 +1,1 @@
-export * from './types/receipe.types'
+export * from './types/recipe.types'

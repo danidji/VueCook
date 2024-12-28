@@ -1,4 +1,5 @@
 import type {TRecipe} from '@/models'
+import {recipeData} from '@/utils/constants/data.constants'
 import {defineStore} from 'pinia'
 
 type TRecipeStore = {
@@ -7,7 +8,7 @@ type TRecipeStore = {
 
 export const useRecipeStore = defineStore('recipe', {
   state: (): TRecipeStore => ({
-    recipes: [],
+    recipes: recipeData,
   }),
   actions: {
     addRecipe(data: TRecipe) {
