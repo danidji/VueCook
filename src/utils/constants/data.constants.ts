@@ -11,7 +11,7 @@ export const category: TCategory[] = [
 
 export const recipeData = [
   {
-    id: '1',
+    id: 'spaghetti-carbonara',
     title: 'Spaghetti Carbonara',
     description: 'Un classique italien à base de pâtes, oeufs et fromage.',
     category: 'favorite',
@@ -23,7 +23,7 @@ export const recipeData = [
     persNb: 4,
   },
   {
-    id: '2',
+    id: 'poulet-tikka-masala',
     title: 'Poulet Tikka Masala',
     description: 'Un curry indien épicé et crémeux.',
     category: 'asian',
@@ -34,7 +34,7 @@ export const recipeData = [
     persNb: 4,
   },
   {
-    id: '3',
+    id: 'salade-cesar',
     title: 'Salade César',
     description: 'Une salade fraîche avec poulet, croûtons et parmesan.',
     category: 'light',
@@ -44,7 +44,7 @@ export const recipeData = [
     persNb: 2,
   },
   {
-    id: '4',
+    id: 'quiche-lorraine',
     title: 'Quiche Lorraine',
     description: 'Une tarte salée traditionnelle française.',
     category: 'easy',
@@ -55,7 +55,7 @@ export const recipeData = [
     persNb: 6,
   },
   {
-    id: '5',
+    id: 'brownies-chocolat',
     title: 'Brownies au chocolat',
     description: 'Dessert gourmand et chocolaté.',
     category: 'dessert',
@@ -66,7 +66,7 @@ export const recipeData = [
     persNb: 8,
   },
   {
-    id: '6',
+    id: 'sushi',
     title: 'Sushi',
     description: 'Rouleaux japonais de riz et poisson.',
     category: 'asian',
@@ -76,7 +76,7 @@ export const recipeData = [
     persNb: 4,
   },
   {
-    id: '7',
+    id: 'soupe-potiron',
     title: 'Soupe de potiron',
     description: 'Une soupe crémeuse et réconfortante.',
     category: 'light',
@@ -87,7 +87,7 @@ export const recipeData = [
     persNb: 4,
   },
   {
-    id: '8',
+    id: 'ratatouille',
     title: 'Ratatouille',
     description: 'Un mélange de légumes méditerranéens.',
     category: 'favorite',
@@ -98,7 +98,7 @@ export const recipeData = [
     persNb: 6,
   },
   {
-    id: '9',
+    id: 'crepes',
     title: 'Crêpes',
     description: 'Une recette de base pour des crêpes légères.',
     category: 'dessert',
@@ -109,7 +109,7 @@ export const recipeData = [
     persNb: 4,
   },
   {
-    id: '10',
+    id: 'guacamole',
     title: 'Guacamole',
     description: "Une sauce mexicaine à base d'avocats.",
     category: 'fast',

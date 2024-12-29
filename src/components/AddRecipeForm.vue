@@ -11,7 +11,6 @@ import TextAreaForm from './TextAreaForm.vue'
 import TimeInput from './TimeInput.vue'
 import InputTags from './InputTags.vue'
 import {useRecipeStore} from '@/store/recipe.store'
-import {generateUniqueId} from '@/utils/functions/general.functions'
 import {useAppStore} from '@/store/app.store'
 // import ImageUploader from './ImageUploader.vue'
 
@@ -61,7 +60,7 @@ const form = useForm({
 
 const onSubmit = form.handleSubmit(values => {
   recipeStore.addRecipe({
-    id: generateUniqueId(8),
+    id: values.title.split(' ').join('-').toLowerCase(),
     ...values,
   })
 
