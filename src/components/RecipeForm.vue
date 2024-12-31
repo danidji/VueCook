@@ -54,7 +54,7 @@ const form = useForm({
       'poire bien mûre',
       'choux chinois',
     ],
-    preparationTime: '13:0',
+    preparationTime: '13:00',
   },
 })
 

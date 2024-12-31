@@ -10,6 +10,7 @@ import upload from './icones/upload.svg'
 import trash from './icones/trash.svg'
 import left from './icones/left.svg'
 import pencil from './icones/pencil.svg'
+import users from './icones/users.svg'
 
 const IconSvg: Record<string, string> = {
   favorite,
@@ -24,6 +25,7 @@ const IconSvg: Record<string, string> = {
   trash,
   left,
   pencil,
+  users,
 }
 
 export default IconSvg

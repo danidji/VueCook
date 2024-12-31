@@ -22,8 +22,10 @@ const time: TTime = reactive({
   min: value.value ? Number((value.value as string).split(':')[1]) : 0,
 })
 
+const parseZero = (value: number) => (value === 0 ? '00' : value)
+
 watch(time, newValue => {
-  handleChange(`${newValue.h}:${newValue.min}`)
+  handleChange(`${parseZero(newValue.h)}:${parseZero(newValue.min)}`)
 })
 
 const isFocus = ref(false)
@@ -35,18 +37,18 @@ const isFocus = ref(false)
     <div
       :class="
         cn(
-          'h-10 px-3 py-2 border border-input rounded-md',
+          'h-10 rounded-md border border-input px-3 py-2',
           isFocus && 'ring-2 ring-ring ring-offset-2',
         )
       ">
-      <div class="flex gap-1 items-center">
+      <div class="flex items-center gap-1">
         <IconImage v-if="iconName" :type="iconName" :size="22" />
         <input
           type="number"
-          min="0"
+          min="00"
           max="23"
           step="1"
-          class="outline-none w-10 text-right"
+          class="w-10 text-right outline-none"
           :value="time.h"
           @input="event => (time.h = Number((event.target as HTMLInputElement).value))"
           @focus="isFocus = true"
@@ -54,10 +56,10 @@ const isFocus = ref(false)
         <span>h</span>
         <input
           type="number"
-          min="0"
+          min="00"
           max="59"
           step="1"
-          class="outline-none w-10 text-right"
+          class="w-10 text-right outline-none"
           :value="time.min"
           @input="event => (time.min = Number((event.target as HTMLInputElement).value))"
           @focus="isFocus = true"

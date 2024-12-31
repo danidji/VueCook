@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import IconImage from '@/components/IconImage.vue'
 import {useRecipeStore} from '@/store/recipe.store'
+import {category} from '@/utils/constants/data.constants'
 import {storeToRefs} from 'pinia'
 import {useRoute} from 'vue-router'
 
@@ -12,8 +14,36 @@ const recipe = getRecipeById.value(route.params.id as string)
 
 <template>
   <main>
-    <h1 class="text-4xl font-bold text-center my-8">{{ recipe?.title }}</h1>
-    <p>{{ recipe?.description }}</p>
-    <p>{{ recipe?.steps }}</p>
+    <h1 class="my-8 text-center text-4xl font-bold">{{ recipe?.title }}</h1>
+    <div class="flex flex-col items-center gap-6">
+      <p v-if="recipe?.description" class="text-center">{{ recipe?.description }}</p>
+      <div class="flex w-full items-center justify-center gap-10">
+        <div class="flex items-center gap-2" v-if="recipe?.category">
+          <IconImage :type="recipe.category" :size="22" />
+          <span>{{ category.find(c => c.type === recipe?.category)?.name }}</span>
+        </div>
+        <div v-if="recipe?.preparationTime" class="flex items-center gap-2">
+          <IconImage type="clock" :size="22" />
+          <span>{{ recipe?.preparationTime }}</span>
+        </div>
+        <div v-if="recipe?.cookingTime" class="flex items-center gap-2">
+          <IconImage type="oven" :size="22" />
+          <span>{{ recipe?.cookingTime }}</span>
+        </div>
+        <div v-if="recipe?.persNb" class="flex items-center gap-2">
+          <IconImage type="users" :size="22" />
+          <span>{{ recipe?.persNb }}</span>
+        </div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-2">
+        <span
+          v-for="ingredient in recipe?.ingredients"
+          :key="ingredient"
+          class="rounded-md bg-muted px-2 py-1"
+          >{{ ingredient }}</span
+        >
+      </div>
+      <p>{{ recipe?.steps }}</p>
+    </div>
   </main>
 </template>
