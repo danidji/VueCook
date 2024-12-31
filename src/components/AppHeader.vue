@@ -1,8 +1,11 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import {useRoute, useRouter} from 'vue-router'
-import AddRecipeForm from './AddRecipeForm.vue'
+import RecipeForm from './RecipeForm.vue'
+import {Button} from '@/components/ui/button'
+
 import DialogModal from './DialogModal.vue'
+import IconImage from './IconImage.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -19,20 +22,25 @@ console.log('route', route.name)
   <header>
     <div class="h-20 w-full flex items-center justify-end" v-if="route.name === 'home'">
       <DialogModal title="Ajouter une recette" trigger="Ajouter une recette">
-        <AddRecipeForm />
+        <RecipeForm />
       </DialogModal>
     </div>
 
-    <div v-else-if="route.name === 'recipe'">
-      <button class="mr-4 px-4 py-2 bg-blue-500 text-white rounded" @click="goBack">Retour</button>
-      <DialogModal title="Modifier la recette" trigger="Modifier la recette">
-        <p>Formulaire de modification ici</p>
-      </DialogModal>
-      <button
-        class="ml-4 px-4 py-2 bg-red-500 text-white rounded"
-        @click="() => console.log('Supprimer la recette')">
-        Supprimer
-      </button>
+    <div v-else-if="route.name === 'recipe'" class="flex items-center justify-between h-20">
+      <Button variant="ghost" @click="goBack">
+        <IconImage type="left" />
+      </Button>
+      <div class="flex items-center gap-2">
+        <DialogModal
+          title="Modifier la recette"
+          icon-trigger="pencil"
+          trigger-button-variant="ghost">
+          <p>Formulaire de modification ici</p>
+        </DialogModal>
+        <Button variant="ghost-destructive" @click="() => console.log('supprimer la recette')">
+          <IconImage type="trash" />
+        </Button>
+      </div>
     </div>
   </header>
 </template>
