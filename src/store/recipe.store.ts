@@ -19,5 +19,13 @@ export const useRecipeStore = defineStore('recipe', {
     addRecipe(data: TRecipe) {
       this.recipes.push(data)
     },
+    updateRecipe(data: TRecipe) {
+      const index = this.recipes.findIndex(recipe => recipe.id === data.id)
+      this.recipes[index] = data
+    },
+    deleteRecipe(id: string) {
+      const index = this.recipes.findIndex(recipe => recipe.id === id)
+      this.recipes.splice(index, 1)
+    },
   },
 })

@@ -13,12 +13,13 @@ defineProps<{
   title: string
   trigger?: string
   iconTrigger?: string
+  id: string
   triggerButtonVariant?: ButtonVariants['variant']
 }>()
 </script>
 
 <template>
-  <Dialog>
+  <Dialog :id="id">
     <DialogTrigger>
       <Button :variant="triggerButtonVariant">
         <span v-if="trigger">

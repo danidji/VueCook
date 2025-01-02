@@ -9,6 +9,26 @@ export const category: TCategory[] = [
   {type: 'light', name: 'IG bas'},
 ]
 
+export const recipeExample = {
+  title: 'Kimchi',
+  category: 'asian',
+  steps:
+    "Couper le choix à la base et séparant de délicatement sans déchirer les feuilles\n\nEnlever la base et couper des bouts d'environ environ 5cm\n\nSaler abondamment, et laisser reposer au moins 12h mélanger au fur et à mesure\n\nDétailler les carottes et le blanc en julienne\n\nCouper la base des oignons nouveaux et les réserver pour la pâte de piment\n\nPour la pate de piment :  mixer le piment, le gingembre, l’ail, la base des oignon nouveau, la poire, une cuillère à soupe de sauce huître et une cuillère à soupe de sauce poisson\n\nRincer abondamment le choux \n\nMélanger le choux les légumes et la pate de piment\n\nMettre dans un bocal hermétique et laisser faire monter pendant une semaine",
+  ingredients: [
+    'piment gochugaru (50gr)',
+    'ail',
+    'gingembre',
+    'carotte',
+    'cebette',
+    'radis blanc',
+    'sauce poisson',
+    'sauce huitre',
+    'poire bien mûre',
+    'choux chinois',
+  ],
+  preparationTime: '13:00',
+}
+
 export const recipeData = [
   {
     id: 'spaghetti-carbonara',

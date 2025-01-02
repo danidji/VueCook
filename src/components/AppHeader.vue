@@ -6,19 +6,31 @@ import {Button} from '@/components/ui/button'
 
 import DialogModal from './DialogModal.vue'
 import IconImage from './IconImage.vue'
+import {computed} from 'vue'
+import {useAppStore} from '@/store/app.store'
+import {useRecipeStore} from '@/store/recipe.store'
 
 const route = useRoute()
 const router = useRouter()
+const appStore = useAppStore()
+const recipeStore = useRecipeStore()
+
+const recipeId = computed(() => route.params.id as string)
 
 const goBack = () => {
   router.back()
+}
+
+const deleteRecipe = () => {
+  recipeStore.deleteRecipe(recipeId.value)
+  goBack()
 }
 </script>
 
 <template>
   <header class="flex h-20 w-full items-center">
     <div class="flex w-full items-center justify-end" v-if="route.name === 'home'">
-      <DialogModal title="Ajouter une recette" trigger="Ajouter une recette">
+      <DialogModal id="add-recipe" title="Ajouter une recette" trigger="Ajouter une recette">
         <RecipeForm />
       </DialogModal>
     </div>
@@ -29,14 +41,25 @@ const goBack = () => {
       </Button>
       <div class="flex items-center gap-2">
         <DialogModal
+          id="udpate-recipe"
           title="Modifier la recette"
           icon-trigger="pencil"
           trigger-button-variant="ghost">
-          <p>Formulaire de modification ici</p>
+          <RecipeForm :recipe-id="recipeId" />
         </DialogModal>
-        <Button variant="ghost-destructive" @click="() => console.log('supprimer la recette')">
-          <IconImage type="trash" />
-        </Button>
+        <DialogModal
+          id="delete-recipe"
+          title="Supprimer la recette"
+          icon-trigger="trash"
+          trigger-button-variant="ghost-destructive">
+          <p>Êtes-vous sûr de vouloir supprimer cette recette ?</p>
+          <div class="flex justify-end gap-4">
+            <Button variant="ghost" @click="() => appStore.closeDialog('delete-recipe')"
+              >Annuler</Button
+            >
+            <Button variant="destructive" @click="deleteRecipe">Supprimer</Button>
+          </div>
+        </DialogModal>
       </div>
     </div>
   </header>

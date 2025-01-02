@@ -1,16 +1,16 @@
 import {defineStore} from 'pinia'
 
 type TAppStore = {
-  isOpenDialog: boolean
+  dialogs: Record<string, boolean>
 }
 
 export const useAppStore = defineStore('app', {
   state: (): TAppStore => ({
-    isOpenDialog: false,
+    dialogs: {},
   }),
   actions: {
-    closeDialog() {
-      this.isOpenDialog = false
+    closeDialog(id: string) {
+      this.dialogs[id] = false
     },
   },
 })

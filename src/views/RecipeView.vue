@@ -3,13 +3,14 @@ import IconImage from '@/components/IconImage.vue'
 import {useRecipeStore} from '@/store/recipe.store'
 import {category} from '@/utils/constants/data.constants'
 import {storeToRefs} from 'pinia'
+import {computed} from 'vue'
 import {useRoute} from 'vue-router'
 
 const route = useRoute()
 const recipeStore = useRecipeStore()
 const {getRecipeById} = storeToRefs(recipeStore)
 
-const recipe = getRecipeById.value(route.params.id as string)
+const recipe = computed(() => getRecipeById.value(route.params.id as string))
 </script>
 
 <template>
