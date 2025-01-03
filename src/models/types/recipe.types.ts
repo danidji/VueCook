@@ -9,7 +9,7 @@ export type TRecipe = {
   description?: string
   category: string
   ingredients: string[]
-  steps: string
+  steps: string[]
   preparationTime?: string
   cookingTime?: string
   persNb?: number

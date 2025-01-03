@@ -6,16 +6,16 @@ import {computed} from 'vue'
 
 import InputForm from './InputForm.vue'
 import SelectForm from './SelectForm.vue'
-import TextAreaForm from './TextAreaForm.vue'
 import TimeInput from './TimeInput.vue'
 import InputTags from './InputTags.vue'
 // import ImageUploader from './ImageUploader.vue'
 
 import {Button} from '@/components/ui/button'
-import {category, recipeExample} from '@/utils/constants/data.constants'
+import {category} from '@/utils/constants/data.constants'
 import {useRecipeStore} from '@/store/recipe.store'
 import {useAppStore} from '@/store/app.store'
 import {recipeFormSchema} from '@/models/schemas/recipe.schemas'
+import InputSteps from './InputSteps.vue'
 
 const {recipeId, dialogId} = defineProps<{
   recipeId?: string
@@ -32,10 +32,12 @@ const formSchema = toTypedSchema(recipeFormSchema)
 
 const form = useForm({
   validationSchema: formSchema,
-  initialValues: recipe.value || recipeExample, //||{ingredients: []},
+  initialValues: recipe.value || {ingredients: [], steps: ['']},
 })
 
 const onSubmit = form.handleSubmit(values => {
+  console.log('values', values)
+
   if (recipe.value) {
     recipeStore.updateRecipe({
       id: recipe.value.id,
@@ -60,7 +62,7 @@ const onSubmit = form.handleSubmit(values => {
     <InputForm type="text" name="description" placeholder="Description" />
     <SelectForm name="category" placeholder="Catégorie" :list="category" withItemIcon />
     <InputTags name="ingredients" placeholder="Ingrédients" />
-    <TextAreaForm name="steps" placeholder="Étapes" />
+    <InputSteps name="steps" label="Étapes" placeholder="Saisir une étape" />
 
     <div class="flex items-end gap-2">
       <TimeInput iconName="clock" name="preparationTime" label="Préparation" />

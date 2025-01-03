@@ -44,7 +44,9 @@ const recipe = computed(() => getRecipeById.value(route.params.id as string))
           >{{ ingredient }}</span
         >
       </div>
-      <p>{{ recipe?.steps }}</p>
+      <ol class="mt-4 list-decimal pl-8">
+        <li v-for="step in recipe?.steps" :key="step" class="mb-2">{{ step }}</li>
+      </ol>
     </div>
   </main>
 </template>

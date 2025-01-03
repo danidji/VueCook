@@ -28,4 +28,5 @@ export const useRecipeStore = defineStore('recipe', {
       this.recipes.splice(index, 1)
     },
   },
+  persist: true,
 })

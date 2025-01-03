@@ -23,6 +23,7 @@ const goBack = () => {
 
 const deleteRecipe = () => {
   recipeStore.deleteRecipe(recipeId.value)
+  appStore.closeDialog('delete-recipe')
   goBack()
 }
 </script>
@@ -31,7 +32,7 @@ const deleteRecipe = () => {
   <header class="flex h-20 w-full items-center">
     <div class="flex w-full items-center justify-end" v-if="route.name === 'home'">
       <DialogModal id="add-recipe" title="Ajouter une recette" trigger="Ajouter une recette">
-        <RecipeForm />
+        <RecipeForm dialog-id="add-recipe" />
       </DialogModal>
     </div>
 
@@ -45,7 +46,7 @@ const deleteRecipe = () => {
           title="Modifier la recette"
           icon-trigger="pencil"
           trigger-button-variant="ghost">
-          <RecipeForm :recipe-id="recipeId" />
+          <RecipeForm :recipe-id="recipeId" dialog-id="update-recipe" />
         </DialogModal>
         <DialogModal
           id="delete-recipe"

@@ -7,7 +7,10 @@ export const recipeFormSchema = z.object({
   category: z
     .string({required_error: 'Champs requis'})
     .refine(value => category.map(c => c.type).includes(value)),
-  steps: z.string({required_error: 'Champs requis'}).min(2).max(2000),
+  steps: z
+    .array(z.string({required_error: 'Champs requis'}))
+    .min(1)
+    .max(50),
   ingredients: z
     .array(z.string({required_error: 'Champs requis'}))
     .min(1)
