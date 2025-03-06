@@ -1,9 +1,19 @@
 <script setup lang="ts">
 import IconImage from '@/components/IconImage.vue'
+import {RecipeService} from '@/services'
 import {useRecipeStore} from '@/store/recipe.store'
 import {category} from '@/utils/constants/data.constants'
+import {ref, watchEffect} from 'vue'
 
 const recipeStore = useRecipeStore()
+
+const data = ref(null)
+
+watchEffect(async () => {
+  const response = await RecipeService.getAll()
+
+  console.log('response', response)
+})
 </script>
 
 <template>
