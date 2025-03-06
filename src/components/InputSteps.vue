@@ -3,23 +3,18 @@ import {useFieldArray} from 'vee-validate'
 import Button from './ui/button/Button.vue'
 import IconImage from './IconImage.vue'
 
-// Props pour définir le nom du champ lié
-
 const {name, label, placeholder} = defineProps<{
   name: string
   label?: string
   placeholder?: string
 }>()
 
-// Utiliser useFieldArray pour gérer la liste dynamique
 const {fields, push, remove} = useFieldArray(name)
 
-// Ajouter une étape
 const addStep = () => {
-  push('') // Ajouter une nouvelle étape vide
+  push('')
 }
 
-// Supprimer une étape
 const removeStep = (index: number) => {
   remove(index)
 }
