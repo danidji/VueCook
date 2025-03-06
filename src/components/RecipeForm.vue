@@ -11,7 +11,7 @@ import InputTags from './InputTags.vue'
 // import ImageUploader from './ImageUploader.vue'
 
 import {Button} from '@/components/ui/button'
-import {category} from '@/utils/constants/data.constants'
+import {category, recipeExample2} from '@/utils/constants/data.constants'
 import {useRecipeStore} from '@/store/recipe.store'
 import {useAppStore} from '@/store/app.store'
 import {recipeFormSchema} from '@/models/schemas/recipe.schemas'
@@ -32,12 +32,10 @@ const formSchema = toTypedSchema(recipeFormSchema)
 
 const form = useForm({
   validationSchema: formSchema,
-  initialValues: recipe.value || {ingredients: [], steps: ['']},
+  initialValues: recipe.value || recipeExample2, //|| {ingredients: [], steps: ['']},
 })
 
 const onSubmit = form.handleSubmit(values => {
-  console.log('values', values)
-
   if (recipe.value) {
     recipeStore.updateRecipe({
       id: recipe.value.id,

@@ -1,18 +1,21 @@
 <script setup lang="ts">
 import IconImage from '@/components/IconImage.vue'
+import type {TRecipe} from '@/models'
 import {RecipeService} from '@/services'
-import {useRecipeStore} from '@/store/recipe.store'
 import {category} from '@/utils/constants/data.constants'
-import {ref, watchEffect} from 'vue'
+import {reactive, watchEffect} from 'vue'
 
-const recipeStore = useRecipeStore()
-
-const data = ref(null)
+const recipeList = reactive({data: [] as TRecipe[]})
 
 watchEffect(async () => {
-  const response = await RecipeService.getAll()
+  try {
+    const data = await RecipeService.getAll()
+    if (!data) throw new Error('No data')
 
-  console.log('response', response)
+    recipeList.data = data
+  } catch (error) {
+    console.error(error)
+  }
 })
 </script>
 
@@ -25,9 +28,9 @@ watchEffect(async () => {
       class="grid h-[calc(100%-56px)] grid-cols-1 gap-4 overflow-auto py-4 md:grid-cols-2 lg:grid-cols-3">
       <button
         @click="() => $router.push(`/recipe/${recipe.id}`)"
-        v-for="recipe in recipeStore.recipes"
+        v-for="recipe in recipeList.data"
         :key="recipe.id"
-        class="flex flex-col items-start justify-between gap-3 rounded-md border-2 border-border bg-white p-4 transition-colors hover:border-primary hover:bg-primary/10">
+        class="flex max-h-52 flex-col items-start justify-between gap-3 rounded-md border-2 border-border bg-white p-4 transition-colors hover:border-primary hover:bg-primary/10">
         <h2 class="text-xl font-bold">{{ recipe.title }}</h2>
         <p class="text-start">{{ recipe.description }}</p>
         <div class="flex items-center gap-2">

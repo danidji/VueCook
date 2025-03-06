@@ -82,10 +82,11 @@ async function fetchGeneric<T>(url: string, config: any = {}): Promise<TFetchRes
   // }
 
   const response = await fetch(`${Config.apiUrl}${url}`, config)
-  console.log('response', response)
 
   if (!response.ok) {
-    throw await handleResponseError(response, url, config)
+    // throw await handleResponseError(response, url, config)
+    const dataError = await response.json()
+    throw new ErrorHelper(dataError)
   } else {
     if (response.status === 204) {
       return {
@@ -95,7 +96,6 @@ async function fetchGeneric<T>(url: string, config: any = {}): Promise<TFetchRes
       }
     }
     const data: T = await response.json()
-    console.log(data)
 
     return {
       status: response.status,
@@ -106,31 +106,31 @@ async function fetchGeneric<T>(url: string, config: any = {}): Promise<TFetchRes
   }
 }
 
-const isProtectedUrl = (url: string) => !url.includes('/api/auth')
+// const isProtectedUrl = (url: string) => !url.includes('/api/auth')
 
-const handleResponseError = async <T>(
-  response: Response,
-  url: string,
-  config: any = {},
-): Promise<TFetchResponse<T> | void> => {
-  const dataError = await response.json()
-  // if (response.status === 401) {
-  //   const authAccess = await StorageService.getAuthAccess()
-  //   if (dataError.code === EErrorCodes.INVALID_TOKEN) {
-  //     if (!authAccess?.rememberMe) {
-  //       return await AuthService.logout()
-  //     }
-  //     return await handleRefreshToken(url, config, authAccess?.refreshToken as string)
-  //   } else if (dataError.code === EErrorCodes.MISSING_TOKEN) {
-  //     return await AuthService.logout()
-  //   } else {
-  //     throw new ErrorHelper(dataError)
-  //   }
-  // } else {
-  //   throw new ErrorHelper(dataError)
-  // }
-  throw new ErrorHelper(dataError)
-}
+// const handleResponseError = async <T>(
+//   response: Response,
+//   url: string,
+//   config: any = {},
+// ): Promise<TFetchResponse<T> | void> => {
+//   const dataError = await response.json()
+// if (response.status === 401) {
+//   const authAccess = await StorageService.getAuthAccess()
+//   if (dataError.code === EErrorCodes.INVALID_TOKEN) {
+//     if (!authAccess?.rememberMe) {
+//       return await AuthService.logout()
+//     }
+//     return await handleRefreshToken(url, config, authAccess?.refreshToken as string)
+//   } else if (dataError.code === EErrorCodes.MISSING_TOKEN) {
+//     return await AuthService.logout()
+//   } else {
+//     throw new ErrorHelper(dataError)
+//   }
+// } else {
+//   throw new ErrorHelper(dataError)
+// }
+//   throw new ErrorHelper(dataError)
+// }
 
 // const handleRefreshToken = async <T>(
 //   url: string,

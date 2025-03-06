@@ -1,16 +1,26 @@
 <script setup lang="ts">
-import IconImage from '@/components/IconImage.vue'
-import {useRecipeStore} from '@/store/recipe.store'
-import {category} from '@/utils/constants/data.constants'
-import {storeToRefs} from 'pinia'
-import {computed} from 'vue'
+import {reactive, watchEffect} from 'vue'
 import {useRoute} from 'vue-router'
 
-const route = useRoute()
-const recipeStore = useRecipeStore()
-const {getRecipeById} = storeToRefs(recipeStore)
+import IconImage from '@/components/IconImage.vue'
+import {category} from '@/utils/constants/data.constants'
+import {RecipeService} from '@/services'
+import type {TRecipe} from '@/models'
 
-const recipe = computed(() => getRecipeById.value(route.params.id as string))
+const route = useRoute()
+
+const recipe = reactive({} as TRecipe)
+
+watchEffect(async () => {
+  try {
+    const data = await RecipeService.getOne(route.params.id as string)
+    if (!data) throw new Error('No data')
+
+    Object.assign(recipe, data)
+  } catch (error) {
+    console.error(error)
+  }
+})
 </script>
 
 <template>
