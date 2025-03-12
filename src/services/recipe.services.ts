@@ -11,8 +11,18 @@ const getOne = async (id: string) => {
   return response.data
 }
 
-const create = async (recipe: TRecipe) => {
+const create = async (recipe: Omit<TRecipe, 'id'>) => {
   const response = await fetcher.post<Omit<TRecipe, 'id'>, TRecipe>('/api/recipes', recipe)
+  return response.data
+}
+
+const update = async (id: string, recipe: Partial<TRecipe>) => {
+  const response = await fetcher.patch<Partial<TRecipe>, TRecipe>(`/api/recipes/${id}`, recipe)
+  return response.data
+}
+
+const remove = async (id: string) => {
+  const response = await fetcher.del(`/api/recipes/${id}`)
   return response.data
 }
 
@@ -20,6 +30,8 @@ const RecipeService = {
   getAll,
   getOne,
   create,
+  update,
+  remove,
 }
 
 export default RecipeService

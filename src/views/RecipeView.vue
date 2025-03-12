@@ -1,25 +1,16 @@
 <script setup lang="ts">
-import {reactive, watchEffect} from 'vue'
 import {useRoute} from 'vue-router'
+import {useQuery} from '@tanstack/vue-query'
 
 import IconImage from '@/components/IconImage.vue'
 import {category} from '@/utils/constants/data.constants'
 import {RecipeService} from '@/services'
-import type {TRecipe} from '@/models'
 
 const route = useRoute()
 
-const recipe = reactive({} as TRecipe)
-
-watchEffect(async () => {
-  try {
-    const data = await RecipeService.getOne(route.params.id as string)
-    if (!data) throw new Error('No data')
-
-    Object.assign(recipe, data)
-  } catch (error) {
-    console.error(error)
-  }
+const {data: recipe} = useQuery({
+  queryKey: ['recipes', route.params.id],
+  queryFn: () => RecipeService.getOne(route.params.id as string),
 })
 </script>
 

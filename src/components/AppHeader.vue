@@ -8,12 +8,12 @@ import DialogModal from './DialogModal.vue'
 import IconImage from './IconImage.vue'
 import {computed} from 'vue'
 import {useAppStore} from '@/store/app.store'
-import {useRecipeStore} from '@/store/recipe.store'
+import {useMutation, useQueryClient} from '@tanstack/vue-query'
+import {RecipeService} from '@/services'
 
 const route = useRoute()
 const router = useRouter()
 const appStore = useAppStore()
-const recipeStore = useRecipeStore()
 
 const recipeId = computed(() => route.params.id as string)
 
@@ -21,11 +21,16 @@ const goBack = () => {
   router.back()
 }
 
-const deleteRecipe = () => {
-  recipeStore.deleteRecipe(recipeId.value)
-  appStore.closeDialog('delete-recipe')
-  goBack()
-}
+const queryClient = useQueryClient()
+
+const deleteRecipe = useMutation({
+  mutationFn: () => RecipeService.remove(recipeId.value),
+  onSuccess: () => {
+    queryClient.invalidateQueries({queryKey: ['recipes']})
+    appStore.closeDialog('delete-recipe')
+    goBack()
+  },
+})
 </script>
 
 <template>
@@ -42,7 +47,7 @@ const deleteRecipe = () => {
       </Button>
       <div class="flex items-center gap-2">
         <DialogModal
-          id="udpate-recipe"
+          id="update-recipe"
           title="Modifier la recette"
           icon-trigger="pencil"
           trigger-button-variant="ghost">
@@ -58,7 +63,7 @@ const deleteRecipe = () => {
             <Button variant="ghost" @click="() => appStore.closeDialog('delete-recipe')"
               >Annuler</Button
             >
-            <Button variant="destructive" @click="deleteRecipe">Supprimer</Button>
+            <Button variant="destructive" @click="deleteRecipe.mutate">Supprimer</Button>
           </div>
         </DialogModal>
       </div>

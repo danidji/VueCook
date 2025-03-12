@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import {toTypedSchema} from '@vee-validate/zod'
 import {useForm} from 'vee-validate'
-import {storeToRefs} from 'pinia'
-import {computed} from 'vue'
+import {useQueryClient, useMutation, useQuery} from '@tanstack/vue-query'
 
 import InputForm from './InputForm.vue'
 import SelectForm from './SelectForm.vue'
@@ -12,21 +11,41 @@ import InputTags from './InputTags.vue'
 
 import {Button} from '@/components/ui/button'
 import {category, recipeExample2} from '@/utils/constants/data.constants'
-import {useRecipeStore} from '@/store/recipe.store'
 import {useAppStore} from '@/store/app.store'
 import {recipeFormSchema} from '@/models/schemas/recipe.schemas'
 import InputSteps from './InputSteps.vue'
+import {RecipeService} from '@/services'
+import type {TRecipe} from '@/models'
 
 const {recipeId, dialogId} = defineProps<{
   recipeId?: string
   dialogId?: string
 }>()
 
-const recipeStore = useRecipeStore()
 const appStore = useAppStore()
 
-const {getRecipeById} = storeToRefs(recipeStore)
-const recipe = computed(() => (recipeId ? getRecipeById.value(recipeId) : null))
+const queryClient = useQueryClient()
+
+const {data: recipe} = useQuery({
+  queryKey: ['recipes', recipeId],
+  queryFn: () => RecipeService.getOne(recipeId as string),
+  enabled: !!recipeId,
+})
+
+const createRecipe = useMutation({
+  mutationFn: RecipeService.create,
+  onSuccess: () => {
+    queryClient.invalidateQueries({queryKey: ['recipes']})
+  },
+})
+
+const updateRecipe = useMutation({
+  mutationFn: ({id, newRecipe}: {id: string; newRecipe: Partial<TRecipe>}) =>
+    RecipeService.update(id, newRecipe),
+  onSuccess: () => {
+    queryClient.invalidateQueries({queryKey: ['recipes', recipeId]})
+  },
+})
 
 const formSchema = toTypedSchema(recipeFormSchema)
 
@@ -37,16 +56,11 @@ const form = useForm({
 
 const onSubmit = form.handleSubmit(values => {
   if (recipe.value) {
-    recipeStore.updateRecipe({
-      id: recipe.value.id,
-      ...values,
-    })
+    updateRecipe.mutate({id: recipe.value.id, newRecipe: values})
   } else {
-    recipeStore.addRecipe({
-      id: values.title.split(' ').join('-').toLowerCase(),
-      ...values,
-    })
+    createRecipe.mutate(values)
   }
+
   if (dialogId) {
     appStore.closeDialog(dialogId)
   }
