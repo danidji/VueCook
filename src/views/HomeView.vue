@@ -4,7 +4,7 @@ import {RecipeService} from '@/services'
 import {category} from '@/utils/constants/data.constants'
 import {useQuery} from '@tanstack/vue-query'
 
-const {data: recipeList} = useQuery({
+const {data: recipeList, isLoading} = useQuery({
   queryKey: ['recipes'],
   queryFn: RecipeService.getAll,
 })
@@ -16,7 +16,12 @@ const {data: recipeList} = useQuery({
       <h1 class="text-4xl font-bold">Recettes</h1>
     </div>
     <div class="h-[calc(100%-56px)]">
-      <div class="grid grid-cols-1 gap-4 overflow-auto py-4 md:grid-cols-2 lg:grid-cols-3">
+      <div class="flex h-full w-full items-center justify-center" v-if="isLoading">
+        <p>Chargement...</p>
+      </div>
+      <div
+        v-if="!isLoading"
+        class="grid grid-cols-1 gap-4 overflow-auto py-4 md:grid-cols-2 lg:grid-cols-3">
         <button
           @click="() => $router.push(`/recipe/${recipe.id}`)"
           v-for="recipe in recipeList"
