@@ -81,6 +81,7 @@ async function fetchGeneric<T>(url: string, config: any = {}): Promise<TFetchRes
   //   }
   // }
 
+  console.log(import.meta.env.VITE_API_URL)
   const response = await fetch(`${Config.apiUrl}${url}`, config)
 
   if (!response.ok) {
